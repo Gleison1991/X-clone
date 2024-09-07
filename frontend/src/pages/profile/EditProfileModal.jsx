@@ -41,6 +41,7 @@ const EditProfileModal = () => {
 								value={formData.fullName}
 								name='fullName'
 								onChange={handleInputChange}
+								autoComplete='name'
 							/>
 							<input
 								type='text'
@@ -49,6 +50,7 @@ const EditProfileModal = () => {
 								value={formData.username}
 								name='username'
 								onChange={handleInputChange}
+								autoComplete='username'
 							/>
 						</div>
 						<div className='flex flex-wrap gap-2'>
@@ -59,6 +61,7 @@ const EditProfileModal = () => {
 								value={formData.email}
 								name='email'
 								onChange={handleInputChange}
+								autoComplete='email'
 							/>
 							<textarea
 								placeholder='Bio'
@@ -76,6 +79,7 @@ const EditProfileModal = () => {
 								value={formData.currentPassword}
 								name='currentPassword'
 								onChange={handleInputChange}
+								autoComplete='current-password'
 							/>
 							<input
 								type='password'
@@ -84,6 +88,7 @@ const EditProfileModal = () => {
 								value={formData.newPassword}
 								name='newPassword'
 								onChange={handleInputChange}
+								autoComplete='new-password'
 							/>
 						</div>
 						<input
@@ -93,6 +98,7 @@ const EditProfileModal = () => {
 							value={formData.link}
 							name='link'
 							onChange={handleInputChange}
+							autoComplete='url'
 						/>
 						<button className='btn btn-primary rounded-full btn-sm text-white'>Update</button>
 					</form>
