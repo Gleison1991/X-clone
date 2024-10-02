@@ -203,14 +203,24 @@ export const getFollowingPosts = async (req, res) => {
     }
 };
 
+import express from 'express';
+const app = express();
+
+// Middleware de autenticação (exemplo)
+const authMiddleware = (req, res, next) => {
+    // Supondo que o usuário autenticado é adicionado ao req.user
+    req.user = { _id: 'id_do_usuario_autenticado' }; // Substitua pelo seu método de autenticação
+    next();
+};
+
+app.use(authMiddleware);
+
 export const getUserPosts = async (req, res) => {
     try {
-        const { username } = req.params;
+        const userId = req.user._id; // ID do usuário autenticado
+        console.log("ID do usuário autenticado:", userId); // Log do ID do usuário
 
-        const user = await User.findOne({ username });
-        if(!user) return res.status(404).json({ error: "User not found" });
-
-        const posts = await Post.find({ user: user._id }).sort({ createdAt: -1 }).populate({
+        const posts = await Post.find({ user: userId }).sort({ createdAt: -1 }).populate({
             path: "user",
             select: "-password",
         }).populate({
@@ -218,9 +228,20 @@ export const getUserPosts = async (req, res) => {
             select: "-password",
         });
 
-        res.status(200).json({posts});
+        console.log("Posts encontrados:", posts); // Log dos posts encontrados
+        res.status(200).json(posts); // before {posts}
     } catch (error) {
         console.log("Error in getUserPosts controller: ", error);
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+// Ponto de entrada da API
+app.post('/api/posts', (req, res) => {
+    console.log("Dados recebidos pela API:", req.body); // Log dos dados recebidos
+    // Processamento da requisição
+});
+
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
+});
